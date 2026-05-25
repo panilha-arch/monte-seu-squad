@@ -1,0 +1,828 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<title>Monte Seu Squad no Claude Code — @panilha (v4)</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;0,9..40,900;1,9..40,300;1,9..40,400&display=swap');
+
+:root {
+  --bege: #F0EDE8;
+  --bege-esc: #E0DDD8;
+  --preto: #111111;
+  --cinza: #777777;
+  --cinza-md: #444444;
+  --branco: #FFFFFF;
+  --claude: #D97757;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+@page {
+  size: A4;
+  margin: 0;
+}
+
+html, body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bege);
+  color: var(--preto);
+  font-size: 11pt;
+  line-height: 1.55;
+}
+
+.page {
+  width: 210mm;
+  min-height: 297mm;
+  padding: 18mm 18mm 14mm;
+  position: relative;
+  page-break-after: always;
+  background: var(--bege);
+}
+
+.page:last-child {
+  page-break-after: avoid;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--bege-esc);
+  padding-bottom: 8mm;
+  margin-bottom: 10mm;
+}
+
+.page-logo {
+  font-weight: 800;
+  font-size: 10pt;
+  letter-spacing: 0.04em;
+}
+
+.page-section {
+  font-size: 8pt;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--cinza);
+}
+
+.page-footer {
+  position: absolute;
+  bottom: 10mm;
+  left: 18mm;
+  right: 18mm;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--bege-esc);
+  padding-top: 6mm;
+  font-size: 8pt;
+  color: var(--cinza);
+}
+
+.page-footer .right {
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+h1 {
+  font-weight: 900;
+  font-size: 32pt;
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+  margin-bottom: 5mm;
+}
+
+h1 .light {
+  font-weight: 300;
+  display: block;
+  font-size: 22pt;
+}
+
+h1 .hl, .hl {
+  color: var(--claude);
+}
+
+h2 {
+  font-weight: 900;
+  font-size: 22pt;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  margin-bottom: 6mm;
+}
+
+h3 {
+  font-weight: 800;
+  font-size: 13pt;
+  margin-bottom: 3mm;
+  letter-spacing: -0.01em;
+}
+
+p {
+  font-size: 11pt;
+  line-height: 1.65;
+  color: var(--preto);
+  margin-bottom: 4mm;
+}
+
+p.lead {
+  font-size: 12pt;
+  line-height: 1.7;
+  color: var(--cinza-md);
+  margin-bottom: 6mm;
+}
+
+.tag {
+  display: inline-block;
+  font-size: 8pt;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--cinza);
+  margin-bottom: 6mm;
+}
+
+.tag::before {
+  content: '— ';
+}
+
+.divider {
+  width: 18mm;
+  height: 1.5px;
+  background: var(--preto);
+  margin: 6mm 0;
+}
+
+.box {
+  background: var(--branco);
+  padding: 6mm;
+  border-left: 3px solid var(--claude);
+  margin-bottom: 5mm;
+}
+
+.box-dark {
+  background: var(--preto);
+  color: var(--branco);
+  padding: 8mm;
+  margin: 6mm 0;
+}
+
+.box-dark p {
+  color: #ddd;
+  font-size: 10pt;
+  line-height: 1.6;
+}
+
+.prompt {
+  background: var(--preto);
+  color: #f0e0d0;
+  padding: 6mm 7mm;
+  font-family: 'Menlo', 'Monaco', monospace;
+  font-size: 9pt;
+  line-height: 1.55;
+  margin: 4mm 0 6mm;
+  border-left: 3px solid var(--claude);
+  white-space: pre-wrap;
+}
+
+.question {
+  border-bottom: 1px solid var(--bege-esc);
+  padding: 4mm 0;
+  display: grid;
+  grid-template-columns: 10mm 1fr;
+  gap: 4mm;
+}
+
+.q-num {
+  font-weight: 900;
+  font-size: 14pt;
+  color: var(--claude);
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.q-content strong {
+  display: block;
+  font-size: 11pt;
+  font-weight: 700;
+  margin-bottom: 2mm;
+}
+
+.q-content p {
+  font-size: 9.5pt;
+  color: var(--cinza-md);
+  line-height: 1.55;
+  margin-bottom: 0;
+}
+
+.agent {
+  background: var(--branco);
+  padding: 6mm;
+  margin-bottom: 4mm;
+  border: 1px solid var(--bege-esc);
+}
+
+.agent-name {
+  font-weight: 900;
+  font-size: 13pt;
+  letter-spacing: -0.02em;
+  color: var(--preto);
+  margin-bottom: 1mm;
+}
+
+.agent-name .hl {
+  color: var(--claude);
+}
+
+.agent dl {
+  margin-top: 3mm;
+}
+
+.agent dt {
+  font-size: 8pt;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--cinza);
+  margin-top: 3mm;
+  margin-bottom: 1mm;
+}
+
+.agent dd {
+  font-size: 10pt;
+  line-height: 1.55;
+  color: var(--preto);
+  margin-bottom: 1mm;
+}
+
+.steps {
+  margin-top: 5mm;
+}
+
+.step {
+  display: grid;
+  grid-template-columns: 10mm 1fr;
+  gap: 4mm;
+  padding: 4mm 0;
+  border-bottom: 1px solid var(--bege-esc);
+}
+
+.step-num {
+  font-weight: 900;
+  font-size: 14pt;
+  color: var(--claude);
+  letter-spacing: -0.02em;
+}
+
+.step strong {
+  font-size: 11pt;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 1mm;
+}
+
+.step p {
+  font-size: 9.5pt;
+  color: var(--cinza-md);
+  line-height: 1.5;
+  margin-bottom: 0;
+}
+
+.symptom {
+  background: var(--branco);
+  padding: 5mm 6mm;
+  border-left: 3px solid var(--preto);
+  margin-bottom: 4mm;
+}
+
+.symptom-title {
+  font-weight: 700;
+  font-size: 11pt;
+  margin-bottom: 2mm;
+  color: var(--preto);
+}
+
+.symptom p {
+  font-size: 9.5pt;
+  color: var(--cinza-md);
+  line-height: 1.55;
+  margin-bottom: 0;
+}
+
+.symptom .fix {
+  margin-top: 2mm;
+  padding-top: 2mm;
+  border-top: 1px dashed var(--bege-esc);
+  color: var(--preto);
+  font-size: 9.5pt;
+}
+
+.symptom .fix strong {
+  color: var(--claude);
+}
+
+.cta-final {
+  text-align: center;
+  padding: 8mm 0;
+  margin-top: 6mm;
+}
+
+.cta-final h3 {
+  font-size: 18pt;
+  margin-bottom: 3mm;
+}
+
+.cta-final a {
+  display: inline-block;
+  background: var(--preto);
+  color: var(--branco);
+  padding: 4mm 8mm;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 11pt;
+  margin-top: 4mm;
+}
+
+.signature {
+  font-style: italic;
+  color: var(--cinza);
+  font-size: 10pt;
+  margin-top: 4mm;
+}
+</style>
+</head>
+<body>
+
+<!-- ════════ PÁGINA 1 — CAPA ════════ -->
+<div class="page">
+  <div class="page-header">
+    <span class="page-logo">@panilha</span>
+    <span class="page-section">Guia v4</span>
+  </div>
+
+  <p class="tag">Guia Prático</p>
+  <h1>
+    <span class="light">Monte Seu Squad no</span>
+    <span class="hl">Claude Code</span>
+  </h1>
+
+  <div class="divider"></div>
+
+  <p class="lead">
+    Um time de agentes de IA não começa pela tecnologia. Começa pelas perguntas certas sobre como você trabalha.
+  </p>
+
+  <p>Responda cada pergunta direto no Claude Code. Ele monta o seu squad com base nas suas respostas.</p>
+
+  <div class="box-dark">
+    <p><strong style="color: white;">Tempo estimado:</strong> 30 a 45 minutos pro squad base.</p>
+    <p><strong style="color: white;">O que você terá no final:</strong> agentes com nome, função, regras e fluxo definidos.</p>
+    <p><strong style="color: white;">Quando expandir:</strong> sempre que identificar um novo gargalo na operação.</p>
+  </div>
+
+  <div class="page-footer">
+    <span>Página 1 · @panilha · Manaus, AM</span>
+    <span class="right">panilha.beehiiv.com</span>
+  </div>
+</div>
+
+<!-- ════════ PÁGINA 2 — INTRO PESSOAL (NOVA) ════════ -->
+<div class="page">
+  <div class="page-header">
+    <span class="page-logo">@panilha</span>
+    <span class="page-section">Por que esse guia existe</span>
+  </div>
+
+  <p class="tag">Antes do método</p>
+  <h2>Cancelei o <span class="hl">ChatGPT Pro</span> há 2 meses.</h2>
+
+  <p>Não senti falta um dia. Claude com Skills e MCP faz o que eu pedia pro Pro fazer. Mas não é sobre a ferramenta.</p>
+
+  <p>É sobre o que mudou quando parei de tratar IA como caixa de conversa e passei a tratar como time de operação.</p>
+
+  <div class="divider"></div>
+
+  <h3>O contexto</h3>
+  <p>Sou founder da Core Digital, agência de publicidade em Manaus. Atendemos 40 contas Meta entre shopping, saúde e estética, varejo, gastronomia, serviços e turismo.</p>
+
+  <p>Antes do squad entrar na operação, meu expediente fechava às 23h. Relatório de cliente, leitura de campanha conta por conta, montagem de diagnóstico, decisão sobre o que mexer. Todo dia. A casa virou extensão da agência.</p>
+
+  <p>Hoje encerro às 19h só por causa do trânsito. O trabalho que importa já tá resolvido antes das 18h.</p>
+
+  <h3>O que mudou</h3>
+  <p>Montei 4 agentes paralelos rodando no Claude Code antes de eu chegar na agência. Cada um lê uma frente do meu dia (anúncios, relatório, caixa de entrada, pendências) e devolve o resumo pronto pra decisão.</p>
+
+  <p>Esse é o <strong>Briefing do Squad</strong>. Você vai ver ele inteiro na página 7.</p>
+
+  <h3>Por que Claude Code (não Cursor, Codex, Windsurf)</h3>
+  <p>Claude Code roda na minha máquina, lê meus arquivos, conecta nos meus dados via MCP. Não é editor de código. É terminal de operação. Pra quem opera (não programa), é o setup que menos atrapalha.</p>
+
+  <div class="page-footer">
+    <span>Página 2 · @panilha · Manaus, AM</span>
+    <span class="right">panilha.beehiiv.com</span>
+  </div>
+</div>
+
+<!-- ════════ PÁGINA 3 — COMO O MÉTODO FUNCIONA ════════ -->
+<div class="page">
+  <div class="page-header">
+    <span class="page-logo">@panilha</span>
+    <span class="page-section">Método</span>
+  </div>
+
+  <p class="tag">Visão geral</p>
+  <h2>Como o método funciona</h2>
+
+  <p class="lead">Você já sabe o que precisa ser feito. O que falta é transformar isso em funções claras, com uma ordem de execução que não depende de você lembrar de tudo.</p>
+
+  <div class="steps">
+    <div class="step">
+      <span class="step-num">01</span>
+      <div>
+        <strong>Time base</strong>
+        <p>As funções mínimas que qualquer operação do seu tipo precisa para funcionar.</p>
+      </div>
+    </div>
+    <div class="step">
+      <span class="step-num">02</span>
+      <div>
+        <strong>Fluxo de trabalho</strong>
+        <p>A ordem de execução. O que depende do quê. O que só avança depois de aprovado.</p>
+      </div>
+    </div>
+    <div class="step">
+      <span class="step-num">03</span>
+      <div>
+        <strong>Especialização</strong>
+        <p>Onde cada agente pode ir mais fundo. Nasce do uso, não do planejamento.</p>
+      </div>
+    </div>
+    <div class="step">
+      <span class="step-num">04</span>
+      <div>
+        <strong>Expansão contínua</strong>
+        <p>O squad cresce conforme a necessidade aparece na operação real.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>Página 3 · @panilha · Manaus, AM</span>
+    <span class="right">panilha.beehiiv.com</span>
+  </div>
+</div>
+
+<!-- ════════ PÁGINA 4 — COMO COMEÇAR ════════ -->
+<div class="page">
+  <div class="page-header">
+    <span class="page-logo">@panilha</span>
+    <span class="page-section">Como começar</span>
+  </div>
+
+  <p class="tag">Prompt de abertura</p>
+  <h2>Cole isso primeiro no <span class="hl">Claude Code</span></h2>
+
+  <p>Abra o Claude Code no VS Code e cole esta mensagem antes de qualquer pergunta. Ela prepara o Claude para montar o squad com base nas suas respostas.</p>
+
+  <div class="prompt">Vou montar um squad de agentes para a minha operação.
+
+Vou te responder algumas perguntas e, no final,
+quero que você monte o squad completo com base nas minhas respostas.
+
+Pode começar?</div>
+
+  <p>Pronto. Agora siga as etapas das próximas páginas.</p>
+
+  <div class="box">
+    <p><strong>Dica importante:</strong> responda como se estivesse explicando pra um sócio novo que acabou de entrar. Quanto mais contexto, melhor o squad.</p>
+  </div>
+
+  <div class="page-footer">
+    <span>Página 4 · @panilha · Manaus, AM</span>
+    <span class="right">panilha.beehiiv.com</span>
+  </div>
+</div>
+
+<!-- ════════ PÁGINA 5 — ETAPA 1 TIME BASE ════════ -->
+<div class="page">
+  <div class="page-header">
+    <span class="page-logo">@panilha</span>
+    <span class="page-section">Etapa 1 — Time Base</span>
+  </div>
+
+  <p class="tag">5 perguntas</p>
+  <h2>Time Base</h2>
+
+  <p>Comece com o mínimo que funciona. Não tente montar o squad perfeito agora.</p>
+
+  <div class="question">
+    <span class="q-num">01</span>
+    <div class="q-content">
+      <strong>Qual é o seu tipo de operação?</strong>
+      <p>Ex: agência de marketing, e-commerce, consultoria, criador de conteúdo, clínica.</p>
+    </div>
+  </div>
+  <div class="question">
+    <span class="q-num">02</span>
+    <div class="q-content">
+      <strong>Quais são as principais entregas do seu trabalho?</strong>
+      <p>O que você produz ou entrega. Ex: campanhas, conteúdo, relatórios, propostas, atendimento.</p>
+    </div>
+  </div>
+  <div class="question">
+    <span class="q-num">03</span>
+    <div class="q-content">
+      <strong>Quem faz o quê hoje?</strong>
+      <p>Se você faz tudo sozinho, diga isso. O objetivo é mapear funções, não pessoas.</p>
+    </div>
+  </div>
+  <div class="question">
+    <span class="q-num">04</span>
+    <div class="q-content">
+      <strong>O que consome mais tempo na sua semana?</strong>
+      <p>Onde você passa mais horas? O que você faz de forma repetitiva?</p>
+    </div>
+  </div>
+  <div class="question">
+    <span class="q-num">05</span>
+    <div class="q-content">
+      <strong>O que mais trava a sua operação?</strong>
+      <p>O que te impede de entregar mais rápido ou com mais qualidade?</p>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>Página 5 · @panilha · Manaus, AM</span>
+    <span class="right">panilha.beehiiv.com</span>
+  </div>
+</div>
+
+<!-- ════════ PÁGINA 6 — ETAPAS 2 E 3 ════════ -->
+<div class="page">
+  <div class="page-header">
+    <span class="page-logo">@panilha</span>
+    <span class="page-section">Etapas 2 e 3</span>
+  </div>
+
+  <p class="tag">4 perguntas</p>
+  <h2>Fluxo de trabalho</h2>
+
+  <p>Um squad sem ordem de execução é só uma lista de funções. Aqui você define quem depende de quem.</p>
+
+  <div class="question">
+    <span class="q-num">06</span>
+    <div class="q-content">
+      <strong>Qual é o primeiro passo de qualquer trabalho?</strong>
+      <p>O que acontece antes de tudo? Ex: briefing, reunião, pesquisa.</p>
+    </div>
+  </div>
+  <div class="question">
+    <span class="q-num">07</span>
+    <div class="q-content">
+      <strong>Qual etapa só começa depois que outra termina?</strong>
+      <p>Ex: o designer só começa depois que o copy está aprovado.</p>
+    </div>
+  </div>
+  <div class="question">
+    <span class="q-num">08</span>
+    <div class="q-content">
+      <strong>Quem aprova cada etapa antes de avançar?</strong>
+      <p>Você mesmo ou o cliente? Defina quem tem a palavra final em cada ponto.</p>
+    </div>
+  </div>
+  <div class="question">
+    <span class="q-num">09</span>
+    <div class="q-content">
+      <strong>O que nunca pode avançar sem aprovação?</strong>
+      <p>Ex: publicação de anúncio, envio de proposta, post no feed.</p>
+    </div>
+  </div>
+
+  <p class="tag" style="margin-top: 10mm;">3 perguntas</p>
+  <h2>Especialização</h2>
+
+  <p>Use essa etapa depois de duas semanas com o squad rodando. Só especialize quando perceber que um agente está entregando resultado genérico.</p>
+
+  <div class="question">
+    <span class="q-num">10</span>
+    <div class="q-content">
+      <strong>Qual agente está entregando resultado genérico?</strong>
+      <p>Onde você olha para o output e pensa "falta algo"?</p>
+    </div>
+  </div>
+  <div class="question">
+    <span class="q-num">11</span>
+    <div class="q-content">
+      <strong>O que esse agente precisaria saber para ir mais fundo?</strong>
+      <p>Ex: conhecimento regional, tom específico, métrica especializada.</p>
+    </div>
+  </div>
+  <div class="question">
+    <span class="q-num">12</span>
+    <div class="q-content">
+      <strong>Existe alguma tarefa que você ainda faz na mão porque nenhum agente acerta?</strong>
+      <p>Essa tarefa é candidata a virar um agente novo com instrução muito específica.</p>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>Página 6 · @panilha · Manaus, AM</span>
+    <span class="right">panilha.beehiiv.com</span>
+  </div>
+</div>
+
+<!-- ════════ PÁGINA 7 — BRIEFING DO SQUAD REAL (NOVA) ════════ -->
+<div class="page">
+  <div class="page-header">
+    <span class="page-logo">@panilha</span>
+    <span class="page-section">Estudo de caso</span>
+  </div>
+
+  <p class="tag">Meu squad real</p>
+  <h2>O <span class="hl">Briefing do Squad</span></h2>
+
+  <p>Esse é o squad que roda na Core Digital todo dia antes de eu chegar. 4 agentes paralelos no Claude Code. Cada um lê uma frente do meu dia e devolve o resumo pronto pra decisão.</p>
+
+  <p><strong>Resultado:</strong> 3 horas devolvidas por dia. Encerro 18h, casa virou casa.</p>
+
+  <div class="divider"></div>
+
+  <div class="agent">
+    <div class="agent-name">Agente 1 — <span class="hl">Anúncios</span></div>
+    <dl>
+      <dt>Função</dt>
+      <dd>Lê o que mudou nas 40 contas Meta da semana. Sinaliza criativo saturando, oportunidade de escala, queda de frequência.</dd>
+      <dt>Devolve em</dt>
+      <dd>Lista priorizada: conta, diagnóstico, ação recomendada, urgência.</dd>
+    </dl>
+  </div>
+
+  <div class="agent">
+    <div class="agent-name">Agente 2 — <span class="hl">Relatório</span></div>
+    <dl>
+      <dt>Função</dt>
+      <dd>Monta esqueleto do relatório mensal por cliente. Leitura técnica, gráfico do mês, recomendação pro próximo ciclo.</dd>
+      <dt>Devolve em</dt>
+      <dd>Relatório quase pronto. Eu reviso o tom de voz e mando.</dd>
+    </dl>
+  </div>
+
+  <div class="agent">
+    <div class="agent-name">Agente 3 — <span class="hl">Caixa de entrada</span></div>
+    <dl>
+      <dt>Função</dt>
+      <dd>Organiza email e WhatsApp. Categoriza urgente, importante, FYI e lixo. Sugere resposta em 1 linha pras urgentes.</dd>
+      <dt>Devolve em</dt>
+      <dd>Tabela: remetente, categoria, resposta sugerida, prazo.</dd>
+    </dl>
+  </div>
+
+  <div class="agent">
+    <div class="agent-name">Agente 4 — <span class="hl">Pendências</span></div>
+    <dl>
+      <dt>Função</dt>
+      <dd>Lê anotações soltas da semana (notes, áudios pra mim mesmo). Organiza em pauta de equipe, tarefas minhas, delegáveis, ideias.</dd>
+      <dt>Devolve em</dt>
+      <dd>Pauta clara pra reunião + lista pessoal limpa.</dd>
+    </dl>
+  </div>
+
+  <div class="page-footer">
+    <span>Página 7 · @panilha · Manaus, AM</span>
+    <span class="right">panilha.beehiiv.com</span>
+  </div>
+</div>
+
+<!-- ════════ PÁGINA 8 — PROMPT FINAL + COMO USAR TODO DIA (NOVA) ════════ -->
+<div class="page">
+  <div class="page-header">
+    <span class="page-logo">@panilha</span>
+    <span class="page-section">Prompt final</span>
+  </div>
+
+  <p class="tag">Cole depois das 12 perguntas</p>
+  <h2>Monte o squad</h2>
+
+  <p>Depois de responder todas as perguntas, cole este prompt no Claude. Ele monta o squad completo.</p>
+
+  <div class="prompt">Com base em tudo que respondi, monte o meu squad completo.
+
+Para cada agente:
+
+NOME
+Função: (uma frase)
+Responsabilidades: (lista curta)
+Regras: (o que sempre faz e o que nunca faz)
+Depende de: (o que precisa estar pronto antes)
+Entrega para: (quem recebe o resultado)
+
+No final, escreva o fluxo completo em ordem de execução
+com os pontos de aprovação que definimos.</div>
+
+  <div class="divider"></div>
+
+  <p class="tag">Como usar todo dia</p>
+  <h2>O ritual do <span class="hl">Briefing</span></h2>
+
+  <p>Montar o squad é só o começo. O método entrega valor quando vira rotina.</p>
+
+  <div class="box">
+    <p style="margin-bottom: 2mm;"><strong>Toda manhã, 5 a 10 minutos antes do café:</strong></p>
+    <p style="margin-bottom: 2mm; font-size: 10pt;">1. Abra o Claude Code no seu projeto.</p>
+    <p style="margin-bottom: 2mm; font-size: 10pt;">2. Rode o agente 1, depois o 2, depois o 3, depois o 4 (paralelo se preferir).</p>
+    <p style="margin-bottom: 2mm; font-size: 10pt;">3. Leia os 4 resumos. Decida o que mexe primeiro.</p>
+    <p style="font-size: 10pt;">4. Salve o squad em SQUAD.md no projeto. Ele lembra de você.</p>
+  </div>
+
+  <p>Quando sentir que um agente tá entregando resultado genérico, volta na Etapa 3 (Especialização) e dá mais contexto pra ele.</p>
+
+  <div class="page-footer">
+    <span>Página 8 · @panilha · Manaus, AM</span>
+    <span class="right">panilha.beehiiv.com</span>
+  </div>
+</div>
+
+<!-- ════════ PÁGINA 9 — TROUBLESHOOTING (NOVA) ════════ -->
+<div class="page">
+  <div class="page-header">
+    <span class="page-logo">@panilha</span>
+    <span class="page-section">Troubleshooting</span>
+  </div>
+
+  <p class="tag">Quando der errado</p>
+  <h2>Os 4 sintomas mais comuns</h2>
+
+  <p>Squad mal calibrado mostra sintoma cedo. Aqui estão os 4 mais comuns e como corrigir.</p>
+
+  <div class="symptom">
+    <div class="symptom-title">1. O Claude entrega resposta genérica</div>
+    <p>Você roda o agente e a resposta serve pra qualquer empresa. Sem nada do seu contexto.</p>
+    <div class="fix"><strong>Correção:</strong> falta contexto no prompt. Adicione histórico (resultados anteriores), meta da semana, decisão da última call com cliente. Sem isso, ele responde genérico igual qualquer um.</div>
+  </div>
+
+  <div class="symptom">
+    <div class="symptom-title">2. Dois agentes fazem a mesma coisa</div>
+    <p>Você percebe que o agente 1 e o agente 3 entregam quase a mesma análise. Redundância.</p>
+    <div class="fix"><strong>Correção:</strong> revise a função de cada um. Cada agente deve ter UM verbo principal (ler, montar, organizar, decidir). Se dois compartilham o mesmo verbo, fundir ou redefinir escopo.</div>
+  </div>
+
+  <div class="symptom">
+    <div class="symptom-title">3. O agente trava esperando aprovação que não vem</div>
+    <p>Definiu que a etapa só avança com aprovação sua, mas você esquece de aprovar e nada anda.</p>
+    <div class="fix"><strong>Correção:</strong> aprovação obrigatória só pro que vai sair pro cliente. Pra trabalho interno, deixe o agente seguir e revisar no final.</div>
+  </div>
+
+  <div class="symptom">
+    <div class="symptom-title">4. O squad parou de evoluir</div>
+    <p>Você montou, rodou 2 semanas, esqueceu. O squad virou peça morta.</p>
+    <div class="fix"><strong>Correção:</strong> agende 15 minutos toda sexta pra revisar. O que funcionou? O que faltou? O que virou hábito e pode ser delegado pro squad? Sem revisão semanal, qualquer sistema vira museu.</div>
+  </div>
+
+  <div class="page-footer">
+    <span>Página 9 · @panilha · Manaus, AM</span>
+    <span class="right">panilha.beehiiv.com</span>
+  </div>
+</div>
+
+<!-- ════════ PÁGINA 10 — FECHAMENTO + NEWSLETTER ════════ -->
+<div class="page">
+  <div class="page-header">
+    <span class="page-logo">@panilha</span>
+    <span class="page-section">Fechamento</span>
+  </div>
+
+  <p class="tag">Você terminou</p>
+  <h2>Agora é só rodar</h2>
+
+  <p>O squad montado vale o que você fizer com ele. Rode toda manhã. Revise toda sexta. Expanda quando travar.</p>
+
+  <p>Não tente montar o squad perfeito agora. Tente rodar o squad funcional amanhã.</p>
+
+  <div class="divider"></div>
+
+  <div class="box-dark">
+    <p style="color: white; font-size: 14pt; font-weight: 700; line-height: 1.3; margin-bottom: 4mm;">A IA bem aplicada não te impressiona.</p>
+    <p style="color: var(--claude); font-size: 14pt; font-weight: 700; line-height: 1.3;">Te devolve tempo.</p>
+  </div>
+
+  <div class="cta-final">
+    <p class="tag">Continua quinzenal</p>
+    <h3>Bastidor de quem opera 40 contas com squad.</h3>
+    <p style="font-size: 10pt; color: var(--cinza); max-width: 130mm; margin-left: auto; margin-right: auto;">Sem hype. Sem promessa. O que tá rodando, o que parou de rodar, o que tá testando. Direto no seu email a cada 2 semanas.</p>
+    <a href="https://panilha.beehiiv.com">panilha.beehiiv.com</a>
+  </div>
+
+  <p class="signature" style="text-align: center;">
+    Criado por @panilha · Founder Core Digital · Manaus, AM
+  </p>
+
+  <div class="page-footer">
+    <span>Página 10 · @panilha · Manaus, AM</span>
+    <span class="right">panilha.beehiiv.com</span>
+  </div>
+</div>
+
+</body>
+</html>

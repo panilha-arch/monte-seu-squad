@@ -4,6 +4,30 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Monte Seu Squad no Claude Code — @panilha</title>
+
+<!-- SEO / Open Graph / Twitter -->
+<meta name="description" content="Guia prático grátis. 30 a 45 minutos respondendo 12 perguntas no Claude Code e você sai com seu primeiro squad de agentes de IA pronto. Pra founder, freelancer e dono de pequeno negócio que quer usar IA sem virar dev.">
+<meta name="author" content="@panilha — Founder Core Digital">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Monte Seu Squad no Claude Code — @panilha">
+<meta property="og:description" content="30 a 45 minutos respondendo 12 perguntas no Claude Code e você sai com seu primeiro squad de agentes de IA pronto. PDF gratuito. Sem cadastro.">
+<meta property="og:image" content="https://panilha-arch.github.io/monte-seu-squad/og-image.png">
+<meta property="og:url" content="https://panilha-arch.github.io/monte-seu-squad/">
+<meta property="og:site_name" content="Monte Seu Squad">
+<meta property="og:locale" content="pt_BR">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Monte Seu Squad no Claude Code — @panilha">
+<meta name="twitter:description" content="30 a 45 minutos respondendo 12 perguntas no Claude Code e você sai com seu primeiro squad de agentes de IA pronto. PDF gratuito. Sem cadastro.">
+<meta name="twitter:image" content="https://panilha-arch.github.io/monte-seu-squad/og-image.png">
+
+<!-- Favicon (SVG inline, sem arquivo extra) -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23111111'/%3E%3Ctext x='16' y='22' font-family='Arial,sans-serif' font-size='18' font-weight='900' fill='%23D97757' text-anchor='middle'%3E%40%3C/text%3E%3C/svg%3E">
+
+<!-- Analytics (Plausible — leve, sem cookie, free) -->
+<script defer data-domain="panilha-arch.github.io" src="https://plausible.io/js/script.js"></script>
+
 <style>
   @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;0,9..40,900;1,9..40,300;1,9..40,400&display=swap');
 
@@ -14,8 +38,10 @@
     --bege-esc: #E0DDD8;
     --preto: #111111;
     --cinza: #777777;
+    --cinza-md: #444444;
     --cinza-lt: #F5F5F5;
     --branco: #FFFFFF;
+    --claude: #D97757;
   }
 
   html { scroll-behavior: smooth; }
@@ -107,6 +133,10 @@
     font-size: clamp(32px, 6vw, 58px);
   }
 
+  .hero h1 .hl {
+    color: var(--claude);
+  }
+
   .divider-line {
     width: 56px;
     height: 2px;
@@ -127,7 +157,23 @@
     line-height: 1.75;
     color: #444;
     max-width: 520px;
+    margin-bottom: 28px;
+  }
+
+  .hero-for {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--cinza);
     margin-bottom: 52px;
+    padding: 12px 16px;
+    border-left: 2px solid var(--claude);
+    background: rgba(217, 119, 87, 0.05);
+    max-width: 520px;
+  }
+
+  .hero-for strong {
+    color: var(--preto);
+    font-weight: 700;
   }
 
   /* ── CTA ── */
@@ -158,6 +204,15 @@
   .cta-btn:hover {
     background: #333;
     transform: translateY(-1px);
+  }
+
+  .cta-btn-claude {
+    background: var(--claude);
+    color: var(--branco);
+  }
+
+  .cta-btn-claude:hover {
+    background: #c0623f;
   }
 
   .cta-btn svg {
@@ -209,7 +264,7 @@
     font-weight: 700;
   }
 
-  /* ── O QUE TEM ── */
+  /* ── SECTIONS ── */
   .section {
     padding: 80px 32px;
     max-width: 760px;
@@ -343,11 +398,126 @@
     color: var(--preto);
   }
 
-  /* ── CTA FINAL ── */
-  .cta-final {
-    padding: 0 32px 96px;
+  /* ── QUEM ESCREVEU ── */
+  .quem {
+    background: var(--branco);
+    padding: 56px 32px;
+    border-top: 1px solid var(--bege-esc);
+    border-bottom: 1px solid var(--bege-esc);
+  }
+
+  .quem-inner {
     max-width: 760px;
     margin: 0 auto;
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+
+  .quem-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: var(--preto);
+    color: var(--claude);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 28px;
+  }
+
+  .quem-content h3 {
+    font-size: 18px;
+    font-weight: 800;
+    margin-bottom: 14px;
+  }
+
+  .quem-content p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: #444;
+    margin-bottom: 10px;
+  }
+
+  .quem-stats {
+    display: flex;
+    gap: 28px;
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid var(--bege-esc);
+  }
+
+  .quem-stat {
+    font-size: 12px;
+  }
+
+  .quem-stat strong {
+    display: block;
+    font-size: 22px;
+    font-weight: 900;
+    color: var(--claude);
+    letter-spacing: -0.02em;
+    margin-bottom: 2px;
+  }
+
+  .quem-stat span {
+    color: var(--cinza);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 10px;
+  }
+
+  /* ── NEWSLETTER CTA ── */
+  .news {
+    background: var(--preto);
+    color: var(--branco);
+    padding: 64px 32px;
+  }
+
+  .news-inner {
+    max-width: 760px;
+    margin: 0 auto;
+    text-align: left;
+  }
+
+  .news-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--claude);
+    margin-bottom: 18px;
+  }
+
+  .news h2 {
+    font-size: clamp(26px, 4vw, 36px);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: 14px;
+  }
+
+  .news p {
+    font-size: 15px;
+    color: #aaa;
+    line-height: 1.6;
+    margin-bottom: 32px;
+    max-width: 480px;
+  }
+
+  /* ── CTA FINAL ── */
+  .cta-final {
+    padding: 80px 32px 96px;
+    max-width: 760px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .cta-final .cta-wrap {
+    align-items: center;
   }
 
   /* ── FOOTER ── */
@@ -375,9 +545,12 @@
     header { padding: 16px 20px; }
     .hero { padding: 64px 20px 56px; }
     .section, .cta-final { padding-left: 20px; padding-right: 20px; }
-    .faixa { padding: 56px 20px; }
+    .faixa, .news, .quem { padding-left: 20px; padding-right: 20px; }
     .etapas { grid-template-columns: 1fr; }
     .overview { grid-template-columns: 1fr; }
+    .quem-inner { grid-template-columns: 1fr; }
+    .quem-avatar { width: 64px; height: 64px; font-size: 22px; }
+    .quem-stats { flex-direction: column; gap: 14px; }
     footer { padding: 24px 20px; }
   }
 </style>
@@ -393,7 +566,7 @@
   <p class="hero-label">Guia Prático — Claude Code</p>
   <h1>
     <span class="light">Monte Seu Squad</span>
-    no Claude Code.
+    no <span class="hl">Claude Code</span>.
   </h1>
   <div class="divider-line"></div>
   <p class="hero-desc">
@@ -402,12 +575,15 @@
     Este guia te leva do zero ao seu primeiro squad funcional,
     no seu ritmo, para a sua necessidade.
   </p>
+  <div class="hero-for">
+    <strong>Pra quem:</strong> founder, freelancer, dono de pequeno negócio e profissional autônomo que quer usar IA no dia a dia sem virar dev.
+  </div>
   <div class="cta-wrap">
-    <a class="cta-btn" href="monte_seu_squad.pdf" download="monte_seu_squad.pdf">
+    <a class="cta-btn" href="monte_seu_squad_v3.pdf" download="monte_seu_squad_panilha.pdf">
       <svg viewBox="0 0 24 24"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 4h14v-2H5v2z"/></svg>
       Baixar o Guia Grátis
     </a>
-    <p class="cta-nota">PDF gratuito. Sem cadastro.</p>
+    <p class="cta-nota">PDF gratuito. Sem cadastro. 30 a 45 minutos pra primeiro squad rodando.</p>
   </div>
 </section>
 
@@ -471,40 +647,88 @@
     <div class="item">
       <span class="item-num">01</span>
       <div>
-        <strong>Prompt de abertura pronto para colar no Claude Code</strong>
-        <p>Uma instrução simples que prepara o Claude para montar o squad com base nas suas respostas.</p>
+        <strong>Por que cancelei o ChatGPT Pro e montei meu squad</strong>
+        <p>Intro pessoal: o contexto que me levou a trocar a caixa de conversa genérica por agentes próprios na operação real da Core Digital.</p>
       </div>
     </div>
     <div class="item">
       <span class="item-num">02</span>
       <div>
-        <strong>17 perguntas organizadas em 4 etapas</strong>
-        <p>Do time base até a expansão contínua. Cada pergunta tem orientação de como responder.</p>
+        <strong>Prompt de abertura pronto para colar no Claude Code</strong>
+        <p>Uma instrução simples que prepara o Claude para montar o squad com base nas suas respostas.</p>
       </div>
     </div>
     <div class="item">
       <span class="item-num">03</span>
       <div>
-        <strong>Exemplo real de squad montado</strong>
-        <p>Como o Claude entrega o resultado depois que você responde tudo — com nome, função, regras e fluxo.</p>
+        <strong>12 perguntas organizadas em 3 etapas</strong>
+        <p>Do time base até a especialização. Cada pergunta tem orientação de como responder.</p>
       </div>
     </div>
     <div class="item">
       <span class="item-num">04</span>
+      <div>
+        <strong>Briefing do Squad real: meu próprio squad de 4 frentes</strong>
+        <p>Os 4 agentes que rodam na Core Digital antes do meu café (anúncios, relatório, caixa de entrada, pendências). Estudo de caso completo.</p>
+      </div>
+    </div>
+    <div class="item">
+      <span class="item-num">05</span>
       <div>
         <strong>Prompt final para montar o squad completo</strong>
         <p>Cola no Claude depois de responder as perguntas. Ele monta tudo com base no que você informou.</p>
       </div>
     </div>
     <div class="item">
-      <span class="item-num">05</span>
+      <span class="item-num">06</span>
       <div>
-        <strong>Instrução para expandir quando precisar</strong>
-        <p>Como voltar ao guia e evoluir o squad conforme novos gargalos aparecem na operação.</p>
+        <strong>Como usar todo dia: o ritual do Briefing</strong>
+        <p>Montar o squad é só o começo. O guia mostra como rodar ele toda manhã pra entregar valor diário.</p>
+      </div>
+    </div>
+    <div class="item">
+      <span class="item-num">07</span>
+      <div>
+        <strong>Quando der errado: troubleshooting</strong>
+        <p>Os 4 sintomas mais comuns de squad mal calibrado e como corrigir cada um.</p>
       </div>
     </div>
   </div>
 </section>
+
+<div class="quem">
+  <div class="quem-inner">
+    <div class="quem-avatar">@</div>
+    <div class="quem-content">
+      <h3>Quem escreveu</h3>
+      <p>
+        Sou o Panilha, founder da Core Digital. Toco 40 contas Meta reais com squad de IA.
+        Cancelei o ChatGPT Pro há 2 meses e montei meu time de agentes no Claude Code.
+      </p>
+      <p>
+        Antes desse setup, eu fechava o dia às 23h. Hoje fecho às 18h só por causa do trânsito.
+        O trabalho que importa tá resolvido antes das 18h. A casa virou casa de novo.
+      </p>
+      <p>
+        Esse guia é o método que eu rodo de verdade, não é teoria.
+      </p>
+      <div class="quem-stats">
+        <div class="quem-stat">
+          <strong>40</strong>
+          <span>contas Meta</span>
+        </div>
+        <div class="quem-stat">
+          <strong>2 meses</strong>
+          <span>operando o squad</span>
+        </div>
+        <div class="quem-stat">
+          <strong>0</strong>
+          <span>R$ com ChatGPT Pro</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="cta-final">
   <div class="cta-wrap">
@@ -512,7 +736,21 @@
       <svg viewBox="0 0 24 24"><path d="M12 16l-5-5h3V4h4v7h3l-5 5zm-7 4h14v-2H5v2z"/></svg>
       Baixar o Guia Grátis
     </a>
-    <p class="cta-nota">PDF gratuito. Sem cadastro.</p>
+    <p class="cta-nota">PDF gratuito. Sem cadastro. 30 a 45 minutos pra primeiro squad rodando.</p>
+  </div>
+</div>
+
+<div class="news">
+  <div class="news-inner">
+    <p class="news-label">Continua semanal</p>
+    <h2>Bastidor quinzenal de quem opera 40 contas com squad.</h2>
+    <p>Sem hype. Sem promessa. O que tá rodando, o que parou de rodar, o que tá testando. Direto no seu email.</p>
+    <div class="cta-wrap">
+      <a class="cta-btn cta-btn-claude" href="https://panilha.beehiiv.com" target="_blank" rel="noopener">
+        Assinar a newsletter →
+      </a>
+      <p class="cta-nota" style="color: #888;">Grátis. Sem spam. Cancela quando quiser.</p>
+    </div>
   </div>
 </div>
 
